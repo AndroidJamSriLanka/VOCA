@@ -4,7 +4,7 @@ In current society, language has become a barrier to the people who has a lack o
 ####Solution- 
 ##VOCA - Dictionary App with Vocabulary Builder
 
-* User can search for a meaning of a word and automatically searched word adds to the Vocabulary List. 
+* User can search for a meaning of a word and searched word adds to the Vocabulary List automatically. 
 * User can view the vocabulary list and be familiar with the words.
 * User can take quizzes to evaluate their knowledge. (Quizzes are made from the vocabulary list)
 * Words are rated automatically according to the quizzes and display the rating result with the world. Therefor user can identify how they are familiar with each word. 
