@@ -12,3 +12,7 @@ In current society, language has become a barrier to the people who has a lack o
 
 ####Data sources-
  Pearson's Longman Dictionary API is used to collect the meaning of the words and Use Parse web service as the backend of the app.
+
+####Screenshots
+
+![Alt text](https://github.com/AndroidJamSriLanka/VOCA/commit/53e86d7aa89a93adf2473179f9e47f16d11e3682 "MainUI")
