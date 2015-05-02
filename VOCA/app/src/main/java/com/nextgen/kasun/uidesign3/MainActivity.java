@@ -1,7 +1,12 @@
 package com.nextgen.kasun.uidesign3;
 
+import java.util.List;
 import java.util.Locale;
 
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -13,13 +18,22 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -35,11 +49,55 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    TextView search;
+    Button btnSearch;
+    String word="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "k35zsfUviiO15FNQz40svuzUw6FRhzwzViYzs6Pw", "ncafHolZ4IJKDCF5Wr5jfQ98DnN1dqOGNNPaFY3x");
+
+
+
+
+        search=(TextView)findViewById(R.id.editTxt);
+        btnSearch=(Button)findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                word = search.getText().toString();
+                Toast.makeText(getApplicationContext(),word,Toast.LENGTH_SHORT).show();
+                ParseObject testObject = new ParseObject("vocabulary");
+                testObject.put("word", word);
+                testObject.put("rate",3);
+                testObject.saveInBackground();
+                InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                im.hideSoftInputFromWindow(search.getWindowToken(), 0);
+                search.clearComposingText();
+                Intent intent=new Intent(MainActivity.this,DefinitionActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("wSelected",word);
+                startActivity(intent);
+
+
+
+            }
+
+        });
+
+
+
+
+
+
+
+
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -83,6 +141,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
